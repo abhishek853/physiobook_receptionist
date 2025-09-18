@@ -19,8 +19,8 @@ export default function CreatePatient() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 sm:p-6 lg:p-8">
-      <div className="bg-gray-100 shadow-2xl rounded-3xl p-6 sm:p-8 w-full max-w-sm md:max-w-md lg:max-w-lg">
+    <div className="min-h-screen bg-violet-200 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+      <div className="bg-violet-300 shadow-2xl rounded-3xl p-6 sm:p-8 w-full max-w-sm md:max-w-md lg:max-w-lg">
         <h2 className="text-3xl font-extrabold mb-8 text-center text-gray-800">
           Create New Patient 🩺
         </h2>
