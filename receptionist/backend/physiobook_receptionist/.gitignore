@@ -15,6 +15,9 @@
 !src/main/**/build/
 /bin/
 
+### Git Ignore
+.gitignore
+
 ### Logs ###
 *.log
 logs/
