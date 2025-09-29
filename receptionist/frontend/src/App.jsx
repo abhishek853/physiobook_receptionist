@@ -1,19 +1,21 @@
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import CreatePatient from './components/CreatePatient'
-import HomePage from './components/HomePage'
+import CreatePatient from './pages/CreatePatient'
+import HomePage from './pages/HomePage'
 import Navbar from './components/Navbar'
+import PatientList from './pages/PatientsList'
 
 function App() {
 
   return (
     <>
-            
-        <Navbar />              
-
-      <Routes>                
-        <Route path="/new" element={<CreatePatient />}></Route>
-        <Route path="/" element={<HomePage />}></Route>
+      <Routes>
+        <Route path="/" element={<Navbar />}>
+          {/* These pages will appear inside <Outlet /> */}
+          <Route index element={<HomePage />} />       {/* Default page */}
+          <Route path="/new" element={<CreatePatient />} />
+          <Route path='/PatientsList' element={<PatientList />}></Route>
+        </Route>
       </Routes>
     </>
   )

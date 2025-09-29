@@ -1,9 +1,11 @@
 import { useState } from "react";
+import axios from "axios";
 
-export default function CreatePatient() {
+const CreatePatient = () => {
   const [formData, setFormData] = useState({
     name: "",
     age: "",
+    weight: "",
     gender: "",
     phone: "",
   });
@@ -12,11 +14,26 @@ export default function CreatePatient() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Patient Data:", formData);
-    // Here you can call your API to save patient
-  };
+    
+    try {
+      const res = await axios.post("http://localhost:8082/api/createPatient", formData);
+      console.log("Patient created successfully:", res.data);
+      alert("Patient created successfully!");
+      setFormData({
+        name: "",
+        age: "",
+        weight: "",
+        gender: "",
+        phone: "",
+      });      
+    } catch (error) {
+      console.error("Error creating patient:", error);
+      alert("Failed to create patient. Please try again.");
+    }
+  };  
 
   return (
     <div className="min-h-screen bg-violet-200 flex items-center justify-center p-4 sm:p-6 lg:p-8">
@@ -60,6 +77,23 @@ export default function CreatePatient() {
             />
           </div>
 
+          {/* Weight */}
+          <div>
+            <label htmlFor="weight" className="block text-sm font-medium text-gray-700">
+              Weight
+            </label>
+            <input
+              type="number"
+              name="weight"
+              id="weight"
+              placeholder="e.g., 54(kg)"
+              value={formData.weight}
+              onChange={handleChange}
+              className="mt-1 block w-full px-4 py-2 text-black bg-gray-50 border border-gray-300 rounded-xl shadow-sm focus:ring-purple-500 focus:border-purple-500 transition-all duration-200"
+              required
+            />
+          </div>
+
           {/* Gender */}
           <div>
             <label htmlFor="gender" className="block text-sm font-medium text-gray-700">
@@ -74,9 +108,9 @@ export default function CreatePatient() {
               required
             >
               <option value="">Select Gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
+              <option value="MALE">Male</option>
+              <option value="FEMALE">Female</option>
+              <option value="OTHER">Other</option>
             </select>
           </div>
 
@@ -108,3 +142,5 @@ export default function CreatePatient() {
     </div>
   );
 }
+
+export default CreatePatient;

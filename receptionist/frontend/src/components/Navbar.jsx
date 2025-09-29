@@ -1,49 +1,63 @@
-import React from 'react'
-import logo from "../assets/logo.png";
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
+
 const Navbar = () => {
   return (
-    <nav className="bg-violet-600 p-4 shadow-lg">
-      <div className="w-full px-4 flex items-center justify-between">
-        {/* Logo and App Name */}
-        <Link to="/">
-          <div className="flex items-center text-white text-base md:text-xl font-bold">
+    <div className="flex min-h-screen bg-violet-200">
+      {/* Sidebar */}
+      <aside className="w-64 bg-violet-300 text-xl text-violet-950 flex flex-col">
+        <Link to={"/"}>
+          <div className="p-6 text-2xl font-bold border-b flex items-center gap-2">
             <img
-              src={logo}
-              alt="Therapy Logo"
-              className="h-6 w-6 md:h-8 md:w-8 mr-2"
+              src="logo.png"
+              className="w-8 h-8"
             />
             TherapyForU
           </div>
         </Link>
 
-        {/* Action Buttons */}
-        <div className="flex items-center space-x-2 md:space-x-4">
-          <Link to="/new">
-            <button className="bg-green-500 hover:bg-green-600 text-white text-sm md:text-base font-semibold py-2 px-3 md:px-4 rounded-full transition-colors duration-200">
-              Add Patient
+        <nav className="flex-1 p-4">
+          <ul className="space-y-4">
+            <li className="hover:bg-white p-2 rounded cursor-pointer">Dashboard</li>
+            <Link to={"/PatientsList"}>
+              <li className="mt-1 hover:bg-white p-2 rounded cursor-pointer">Patients</li>
+            </Link>
+            <Link to={"/Appointments"}>
+              <li className="mt-1 hover:bg-white p-2 rounded cursor-pointer">Appointments</li>
+            </Link>
+            <Link>
+              <li className="mt-1 hover:bg-white p-2 rounded cursor-pointer">Settings</li>
+            </Link>
+            <Link>
+              <li className="mt-1 hover:bg-white p-2 rounded cursor-pointer">Logout</li>
+            </Link>
+          </ul>
+        </nav>
+      </aside>
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col">
+        {/* Top Navbar */}
+        <header className="bg-violet-300 shadow p-4 flex justify-between items-center">
+          <h1 className="text-xl font-bold">Welcome </h1>
+          <div className="flex gap-4">
+            <Link to="/new">
+              <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700" >
+                Add Patient
+              </button>
+            </Link>
+
+            <button className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700">
+              Profile
             </button>
-          </Link>
-          <div className="bg-gray-200 w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center">
-            {/* User Profile Icon/Image */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 md:h-6 md:w-6 text-gray-700"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-              />
-            </svg>
           </div>
-        </div>
+        </header>
+
+        {/* Dynamic page content */}
+        <main className="p-6 flex-1 overflow-y-auto">
+          <Outlet />
+        </main>
       </div>
-    </nav>
+    </div>
   )
 }
 
