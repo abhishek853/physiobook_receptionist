@@ -2,15 +2,11 @@ package com.physiobook.physiobook_receptionist.patient;
 
 import com.physiobook.physiobook_receptionist.enums.Gender;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -31,5 +27,15 @@ public class Patient {
     @Column(nullable = false)
     @NotBlank(message = "Phone Number cannot be blank")
     private String phone;
-    
+
+    @Column(nullable = false)
+    private String status="waiting";
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 }

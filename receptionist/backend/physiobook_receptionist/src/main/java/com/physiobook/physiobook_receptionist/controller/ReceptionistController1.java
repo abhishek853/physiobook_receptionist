@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/api")
 @Tag(name = "Receptionist Api`s", description = "Api for Receptionist operation")
-public class ReceptionistController {
+public class ReceptionistController1 {
 
     @GetMapping("/welcome")
     @Operation(summary = "welcome api", description = "greet a welcome msg")
