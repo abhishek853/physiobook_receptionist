@@ -1,7 +1,8 @@
-package com.physiobook.physiobook_receptionist.kafka;
-import com.physiobook.physiobook_receptionist.kafka.ReceptionistMessageService;
+package com.physiobook.physiobook_receptionist.kafka.consumer;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
+
+import com.physiobook.physiobook_receptionist.kafka.service.ReceptionistMessageService;
 
 @Service
 public class ReceptionistConsumer {
