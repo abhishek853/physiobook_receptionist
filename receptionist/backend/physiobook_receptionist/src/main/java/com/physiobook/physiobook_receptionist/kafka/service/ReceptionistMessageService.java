@@ -1,6 +1,5 @@
 package com.physiobook.physiobook_receptionist.kafka.service;
 
-
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

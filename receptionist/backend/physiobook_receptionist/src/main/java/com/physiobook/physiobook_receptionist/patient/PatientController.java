@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import com.physiobook.physiobook_receptionist.kafka.producer.PatientProducer;
+
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
@@ -20,9 +22,12 @@ import jakarta.validation.Valid;
 @RequestMapping("/api")
 public class PatientController {
     private PatientService patientService;
+    private final PatientProducer patientProducer;
 
-    public PatientController(PatientService patientService){
+
+    public PatientController(PatientService patientService, PatientProducer patientProducer) {
         this.patientService = patientService;
+        this.patientProducer = patientProducer;
     }
 
     @PostMapping("/createPatient")
@@ -31,6 +36,7 @@ public class PatientController {
         
         try {
             patientService.createPatient(patient);
+            patientProducer.sendPatientData(patient);
             return ResponseEntity.status(HttpStatus.OK).body("Patient Created Successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create patient");

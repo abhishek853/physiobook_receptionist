@@ -5,11 +5,13 @@ import com.physiobook.physiobook_receptionist.enums.Gender;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Patient {
 
     @Id
@@ -19,7 +21,7 @@ public class Patient {
     private String name;
 
     private int age;
-    private int weight;    
+    private int weight;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
@@ -29,13 +31,15 @@ public class Patient {
     private String phone;
 
     @Column(nullable = false)
-    private String status="waiting";
+    private String status = "waiting";
 
-    @Column(nullable = false, updatable = false)
+    @Column(name = "createdAt", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @PrePersist
     protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
+        if (this.createdAt == null) {
+            this.createdAt = LocalDateTime.now();
+        }
     }
 }

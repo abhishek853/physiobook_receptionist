@@ -10,14 +10,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.support.serializer.JsonSerializer;
+
+import com.physiobook.physiobook_receptionist.patient.Patient;
 
 @Configuration
 public class KafkaProducerConfig {
     
     @Bean
-    public ProducerFactory<String, String> producerFactory() {
-        Map<String, Object> configProps = new HashMap<>();        
-
+    public ProducerFactory<String, String> stringProducerFactory() {
+        Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -25,7 +27,23 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, String> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
+    public KafkaTemplate<String, String> stringKafkaTemplate() {
+        return new KafkaTemplate<>(stringProducerFactory());
+    }
+
+    @Bean
+    public ProducerFactory<String, Patient> patientProducerFactory() {
+        Map<String, Object> configProps = new HashMap<>();
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        configProps.put(JsonSerializer.ADD_TYPE_INFO_HEADERS, false);
+
+        return new DefaultKafkaProducerFactory<>(configProps);
+    }
+
+    @Bean
+    public KafkaTemplate<String, Patient> patientKafkaTemplate() {
+        return new KafkaTemplate<>(patientProducerFactory());
     }
 }
